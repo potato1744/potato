@@ -42,4 +42,3 @@ int main() {
     cout << "Æò±Õ: " << average << endl;
 
     return 0;
-}
