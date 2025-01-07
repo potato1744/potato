@@ -1,0 +1,86 @@
+#include <iostream>
+
+template <typename T>
+class SimpleVector {
+private:
+    T* data;           // 데이터
+    size_t currentSize; // 원소 개수
+    size_t maxCapacity; // 몰라
+
+public:
+    // 기본
+    SimpleVector() {
+        currentSize = 0;
+        maxCapacity = 10;
+        data = new T[maxCapacity];
+    }
+
+    // 크기
+    SimpleVector(size_t capacity) {
+        currentSize = 0;
+        maxCapacity = capacity;
+        data = new T[maxCapacity];
+    }
+
+    // 
+    ~SimpleVector() {
+        delete[] data;
+    }
+
+    // 원소 add
+    void push_back(const T& element) {
+        if (currentSize < maxCapacity) {
+            data[currentSize] = element;
+            currentSize++;
+        } else {
+            std::cout << "No more space to add elements!\n";
+        }
+    }
+
+    // last 원소 delete
+    void pop_back() {
+        if (currentSize > 0) {
+            currentSize--;
+        } else {
+            std::cout << "No elements to remove!\n";
+        }
+    }
+
+    // 개수 반환
+    size_t size() const {
+        return currentSize;
+    }
+
+    // 크기 반환
+    size_t capacity() const {
+        return maxCapacity;
+    }
+
+    // 원소 접근 (테스트 용도)
+    T& operator[](size_t index) {
+        if (index >= currentSize) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+};
+
+int main() {
+    SimpleVector<int> vec; // 벡터 생성
+
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+
+    std::cout << "Size: " << vec.size() << "\n";
+    std::cout << "Capacity: " << vec.capacity() << "\n";
+
+    vec.pop_back();
+    std::cout << "Size after pop_back: " << vec.size() << "\n";
+
+    for (size_t i = 0; i < vec.size(); ++i) {
+        std::cout << "Element " << i << ": " << vec[i] << "\n";
+    }
+
+    return 0;
+}
