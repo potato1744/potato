@@ -1,0 +1,54 @@
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "MyMovingActor.generated.h"
+
+UCLASS()
+class YOURPROJECT_API AMyMovingActor : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	AMyMovingActor()
+	{
+		PrimaryActorTick.bCanEverTick = true;
+		CurrentLocation = FVector(0, 0, 0);
+	}
+
+protected:
+	virtual void BeginPlay() override
+	{
+		Super::BeginPlay();
+		Move();
+	}
+
+public:	
+	virtual void Tick(float DeltaTime) override
+	{
+		Super::Tick(DeltaTime);
+	}
+
+private:
+	FVector CurrentLocation;
+
+	int32 Step()
+	{
+		return FMath::RandRange(0, 1);
+	}
+
+	void Move()
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			int32 StepX = Step();
+			int32 StepY = Step();
+
+			CurrentLocation.X += StepX;
+			CurrentLocation.Y += StepY;
+
+			if (CurrentLocation.X > 2) CurrentLocation.X = 2;
+			if (CurrentLocation.Y > 2) CurrentLocation.Y = 2;
+
+			UE_LOG(LogTemp, Warning, TEXT("Step %d: Current Location: (%f, %f)"), i + 1, CurrentLocation.X, CurrentLocation.Y);
+		}
+	}
+};
